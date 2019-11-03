@@ -1,4 +1,4 @@
-# ImeJi (¥¤¥á©`¥¸)
+# ImeJi (ã‚¤ãƒ¡ãƒ¼ã‚¸)
 
 Open-Source Image Server (Backend Side)
 
