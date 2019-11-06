@@ -26,7 +26,11 @@ public class ImeJi {
 
     private Properties configurationProperties = new Properties();
 
+    @Getter
+    private static ImeJi instance;
+
     public ImeJi() {
+        instance = this;
         this.start();
     }
 

@@ -19,4 +19,10 @@ public class DatabaseController {
         this.imeJiQueue.add(imeJiImage);
     }
 
+    public ImeJiImage fetchImejiImage(String imejiId) {
+        return this.imeJi.getTinyORM().single(ImeJiImage.class)
+                .where("id=?", imejiId)
+                .execute()
+                .orElse(null);
+    }
 }

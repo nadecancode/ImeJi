@@ -29,8 +29,16 @@ public class RedisCacheController implements ICacheController {
     }
 
     @Override
-    public void pullFromCache(String id, Consumer<ImeJiImage> cachedImage) {
-        cachedImage.accept(new ImeJiImageMapper().fromJsonObject(ImeJi.GSON.fromJson(this.jedis.get(id.toLowerCase()),  JsonObject.class)));
+    public void pullFromCache(String id, Consumer<ImeJiImage> cachedImageConsumer) {
+        ImeJiImage cachedImage = null;
+
+        String s = this.jedis.get(id.toLowerCase());
+        if (!s.isEmpty()) {
+            JsonObject jsonObject = ImeJi.GSON.fromJson(s, JsonObject.class);
+            if (jsonObject != null) cachedImage = new ImeJiImageMapper().fromJsonObject(jsonObject);
+        }
+
+        cachedImageConsumer.accept(cachedImage);
     }
 
 }
