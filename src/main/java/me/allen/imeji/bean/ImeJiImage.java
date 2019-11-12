@@ -1,6 +1,5 @@
 package me.allen.imeji.bean;
 
-import com.sun.istack.internal.Nullable;
 import lombok.*;
 import me.geso.tinyorm.Row;
 import me.geso.tinyorm.annotations.*;
@@ -16,11 +15,9 @@ public class ImeJiImage extends Row<ImeJiImage> {
     private final String id;
 
     @Column
-    @Nullable
     private String postName;
 
     @Column
-    @Nullable
     private String postDescription;
 
     @CsvColumn

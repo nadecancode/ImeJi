@@ -1,5 +1,6 @@
 package me.allen.imeji.cache.impl;
 
+import co.aikar.taskchain.TaskChain;
 import com.google.gson.JsonObject;
 import me.allen.imeji.ImeJi;
 import me.allen.imeji.bean.ImeJiImage;
@@ -25,20 +26,33 @@ public class RedisCacheController implements ICacheController {
 
     @Override
     public void saveToCache(ImeJiImage imeJiImage) {
-        this.jedis.set(imeJiImage.getId().toLowerCase(), new ImeJiImageMapper().toJsonObject(imeJiImage).toString());
+        TaskChain<String> taskChain = this.imeJi
+                .getTaskFactory()
+                .newChain();
+
+        taskChain
+                .syncFirst(() -> new ImeJiImageMapper().toJsonObject(imeJiImage).toString())
+                .asyncLast((mapped) -> this.jedis.set(imeJiImage.getId().toLowerCase(), mapped))
+                .execute();
     }
 
     @Override
     public void pullFromCache(String id, Consumer<ImeJiImage> cachedImageConsumer) {
-        ImeJiImage cachedImage = null;
+        this.imeJi
+                .getTaskFactory()
+                .newChain()
+                .async(() -> {
+                    ImeJiImage cachedImage = null;
 
-        String s = this.jedis.get(id.toLowerCase());
-        if (!s.isEmpty()) {
-            JsonObject jsonObject = ImeJi.GSON.fromJson(s, JsonObject.class);
-            if (jsonObject != null) cachedImage = new ImeJiImageMapper().fromJsonObject(jsonObject);
-        }
+                    String s = this.jedis.get(id.toLowerCase());
+                    if (!s.isEmpty()) {
+                        JsonObject jsonObject = ImeJi.GSON.fromJson(s, JsonObject.class);
+                        if (jsonObject != null) cachedImage = new ImeJiImageMapper().fromJsonObject(jsonObject);
+                    }
 
-        cachedImageConsumer.accept(cachedImage);
+                    cachedImageConsumer.accept(cachedImage);
+                })
+                .execute();
     }
 
 }

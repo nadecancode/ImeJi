@@ -20,12 +20,13 @@ public class ImeJiSaveThread extends Thread {
         while (!imeJiImages.isEmpty()) {
             ImeJiImage image = imeJiImages.poll();
             ImeJiInsertForm imeJiInsertForm = new ImeJiInsertForm(image);
+
+            this.imeJi.getCacheController().saveToCache(image);
+
             this.imeJi.getTinyORM()
                     .insert(ImeJiImage.class)
                     .valueByBean(imeJiInsertForm)
                     .execute();
-
-            this.imeJi.getCacheController().saveToCache(image);
 
             Thread.sleep(100L);
         }

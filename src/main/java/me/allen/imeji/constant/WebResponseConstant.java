@@ -5,6 +5,27 @@ import org.jglue.fluentjson.JsonBuilderFactory;
 
 public class WebResponseConstant {
 
+    public static final JsonObject LOCAL_HOST_ONLY = JsonBuilderFactory
+            .buildObject()
+            .add("code", 403)
+            .add("message", "Unauthorized Request")
+            .add("description", "The requests were ")
+            .getJson();
+
+    public static final JsonObject GET_REQUEST_ONLY = JsonBuilderFactory
+            .buildObject()
+            .add("code", 401)
+            .add("message", "Incorrect Request Type")
+            .add("description", "The web server only allows GET request, please check your request type.")
+            .getJson();
+
+    public static final JsonObject POST_REQUEST_ONLY = JsonBuilderFactory
+            .buildObject()
+            .add("code", 401)
+            .add("message", "Incorrect Request Type")
+            .add("description", "The web server only allows POST request, please check your request type.")
+            .getJson();
+
     public static final JsonObject INCORRECT_CONTENT_FORM = JsonBuilderFactory
             .buildObject()
             .add("code", 400)

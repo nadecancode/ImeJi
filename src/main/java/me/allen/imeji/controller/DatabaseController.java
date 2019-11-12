@@ -6,6 +6,7 @@ import me.allen.imeji.ImeJi;
 import me.allen.imeji.bean.ImeJiImage;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Consumer;
 
 @RequiredArgsConstructor
 public class DatabaseController {
@@ -19,10 +20,16 @@ public class DatabaseController {
         this.imeJiQueue.add(imeJiImage);
     }
 
-    public ImeJiImage fetchImejiImage(String imejiId) {
-        return this.imeJi.getTinyORM().single(ImeJiImage.class)
-                .where("id=?", imejiId)
-                .execute()
-                .orElse(null);
+    public void fetchImejiImage(String imejiId, Consumer<ImeJiImage> consumer) {
+        this.imeJi
+                .getTaskFactory()
+                .newChain()
+                .async(() -> {
+                    consumer.accept(this.imeJi.getTinyORM().single(ImeJiImage.class)
+                            .where("id=?", imejiId)
+                            .execute()
+                            .orElse(null));
+                })
+                .execute();
     }
 }

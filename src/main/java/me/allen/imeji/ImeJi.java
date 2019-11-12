@@ -1,5 +1,6 @@
 package me.allen.imeji;
 
+import co.aikar.taskchain.TaskChainFactory;
 import com.google.gson.Gson;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -9,7 +10,10 @@ import me.allen.imeji.cache.ICacheController;
 import me.allen.imeji.cache.impl.BuiltInCacheController;
 import me.allen.imeji.cache.impl.RedisCacheController;
 import me.allen.imeji.controller.DatabaseController;
+import me.allen.imeji.task.ImeJiTaskFactory;
+import me.allen.imeji.thread.ImeJiPrimaryThread;
 import me.allen.imeji.thread.ImeJiSaveThread;
+import me.allen.imeji.webapp.ImeJiWebApp;
 import me.geso.tinyorm.TinyORM;
 
 import java.sql.Connection;
@@ -25,6 +29,8 @@ public class ImeJi {
     private ICacheController cacheController;
 
     private Properties configurationProperties = new Properties();
+    private ImeJiPrimaryThread primaryThread = new ImeJiPrimaryThread();
+    private TaskChainFactory taskFactory;
 
     @Getter
     private static ImeJi instance;
@@ -38,13 +44,20 @@ public class ImeJi {
     public void start() {
         this.configurationProperties.load(ImeJi.class.getClassLoader().getResourceAsStream("config.properties"));
 
-        this.startTasks();
         this.startDatabase();
+        this.startTasks();
         this.startCacheService();
+        this.startWebApp();
+    }
+
+    @SneakyThrows
+    private void startWebApp() {
+        new ImeJiWebApp(this).start();
     }
 
     @SneakyThrows
     private void startTasks() {
+        this.taskFactory = ImeJiTaskFactory.create();
         new ImeJiSaveThread(this).start();
     }
 

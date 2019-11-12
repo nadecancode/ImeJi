@@ -33,6 +33,11 @@ public class ImeJiImageMapper implements IObjectMapper<ImeJiImage> {
     @Override
     public ImeJiImage fromJsonObject(JsonObject jsonObject) {
         List<String> encodedImages = new ArrayList<>();
+
+        if (!jsonObject.has("id") || !jsonObject.has("uploadedTime") || !jsonObject.has("encodedImages")) {
+            return null;
+        }
+
         jsonObject.getAsJsonArray("encodedImages").forEach(encodedElement -> {
             String encodedImage = encodedElement.getAsString();
             encodedImages.add(encodedImage);
