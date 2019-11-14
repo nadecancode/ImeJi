@@ -10,4 +10,6 @@ public interface ICacheController {
 
     void pullFromCache(String id, Consumer<ImeJiImage> cachedImage);
 
+    ImeJiImage pullFromCacheSync(String id);
+
 }

@@ -2,10 +2,12 @@ package me.allen.imeji;
 
 import co.aikar.taskchain.TaskChainFactory;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import me.allen.imeji.bean.ImeJiImage;
 import me.allen.imeji.cache.ICacheController;
 import me.allen.imeji.cache.impl.BuiltInCacheController;
 import me.allen.imeji.cache.impl.RedisCacheController;
@@ -17,12 +19,14 @@ import me.allen.imeji.webapp.ImeJiWebApp;
 import me.geso.tinyorm.TinyORM;
 
 import java.sql.Connection;
+import java.util.Arrays;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 @Getter
 public class ImeJi {
 
-    public static final Gson GSON = new Gson();
+    public static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
     private TinyORM tinyORM;
     private DatabaseController databaseController;

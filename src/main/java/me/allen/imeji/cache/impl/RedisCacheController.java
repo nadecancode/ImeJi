@@ -41,18 +41,21 @@ public class RedisCacheController implements ICacheController {
         this.imeJi
                 .getTaskFactory()
                 .newChain()
-                .async(() -> {
-                    ImeJiImage cachedImage = null;
-
-                    String s = this.jedis.get(id.toLowerCase());
-                    if (!s.isEmpty()) {
-                        JsonObject jsonObject = ImeJi.GSON.fromJson(s, JsonObject.class);
-                        if (jsonObject != null) cachedImage = new ImeJiImageMapper().fromJsonObject(jsonObject);
-                    }
-
-                    cachedImageConsumer.accept(cachedImage);
-                })
+                .async(() -> cachedImageConsumer.accept(pullFromCacheSync(id)))
                 .execute();
+    }
+
+    @Override
+    public ImeJiImage pullFromCacheSync(String id) {
+        ImeJiImage cachedImage = null;
+
+        String s = this.jedis.get(id.toLowerCase());
+        if (!s.isEmpty()) {
+            JsonObject jsonObject = ImeJi.GSON.fromJson(s, JsonObject.class);
+            if (jsonObject != null) cachedImage = new ImeJiImageMapper().fromJsonObject(jsonObject);
+        }
+
+        return cachedImage;
     }
 
 }

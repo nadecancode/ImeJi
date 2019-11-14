@@ -7,6 +7,8 @@ Under Development...
 
 ---
 ## Credits 
+[Rapidoid](https://github.com/rapidoid/rapidoid) Extremely fast web server implementation
+
 [Hikari](https://github.com/brettwooldridge/HikariCP/) - For fast MySQL Data Storage
 
 [TinyORM](https://github.com/tokuhirom/tinyorm) - MySQL Object Mapper

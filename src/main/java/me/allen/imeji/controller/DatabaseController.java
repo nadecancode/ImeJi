@@ -20,16 +20,24 @@ public class DatabaseController {
         this.imeJiQueue.add(imeJiImage);
     }
 
+    /*
+       Only use for sync access because the webapp is async already
+     */
+    public ImeJiImage fetchImejiImageSync(String imejiId) {
+        return  this.imeJi.getTinyORM().single(ImeJiImage.class)
+                .where("id=?", imejiId)
+                .execute()
+                .orElse(null);
+    }
+
     public void fetchImejiImage(String imejiId, Consumer<ImeJiImage> consumer) {
         this.imeJi
                 .getTaskFactory()
                 .newChain()
-                .async(() -> {
-                    consumer.accept(this.imeJi.getTinyORM().single(ImeJiImage.class)
-                            .where("id=?", imejiId)
-                            .execute()
-                            .orElse(null));
-                })
+                .async(() -> consumer.accept(this.imeJi.getTinyORM().single(ImeJiImage.class)
+                        .where("id=?", imejiId)
+                        .execute()
+                        .orElse(null)))
                 .execute();
     }
 }

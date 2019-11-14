@@ -29,12 +29,20 @@ public class BuiltInCacheController implements ICacheController {
 
     @Override
     public void pullFromCache(String id, Consumer<ImeJiImage> cachedImageConsumer) {
+        this.imeJi
+                .getTaskFactory()
+                .newChain()
+                .async(() -> cachedImageConsumer.accept(pullFromCacheSync(id)));
+    }
+
+    @Override
+    public ImeJiImage pullFromCacheSync(String id) {
         JsonObject jsonObject = this.imageLoadingCache.getIfPresent(id.toLowerCase());
         ImeJiImage cachedImage = null;
 
         if (jsonObject != null) cachedImage = new ImeJiImageMapper().fromJsonObject(jsonObject);
 
-        cachedImageConsumer.accept(cachedImage);
+        return cachedImage;
     }
 
 }

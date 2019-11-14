@@ -1,4 +1,4 @@
-package me.allen.imeji.webapp.servlet;
+package me.allen.imeji.webapp.servlet.impl;
 
 import com.google.gson.JsonObject;
 import lombok.SneakyThrows;
@@ -25,13 +25,17 @@ public class ImeJiUploadServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        /*
         response.setStatus(401);
         WebUtil.sendJson(response, WebResponseConstant.POST_REQUEST_ONLY);
+
+         */
     }
 
     @Override
     @SneakyThrows
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+        /*
         if (!WebUtil.getClientIpAddress(request).equals(InetAddress.getLocalHost().getHostAddress())) {
             response.setStatus(403);
             WebUtil.sendJson(response, WebResponseConstant.LOCAL_HOST_ONLY);
@@ -65,6 +69,8 @@ public class ImeJiUploadServlet extends HttpServlet {
         ImeJi.getInstance()
                 .getDatabaseController()
                 .saveToQueue(imeJiImage);
+
+         */
     }
 
 }
