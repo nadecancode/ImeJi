@@ -1,6 +1,7 @@
 package me.allen.imeji.bean;
 
 import lombok.*;
+import me.allen.imeji.response.WebResponseEntity;
 import me.geso.tinyorm.Row;
 import me.geso.tinyorm.annotations.*;
 
@@ -9,7 +10,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Table("images")
 @Data
-public class ImeJiImage extends Row<ImeJiImage> {
+public class ImeJiImage extends Row<ImeJiImage> implements WebResponseEntity {
 
     @PrimaryKey
     private final String id;

@@ -1,8 +1,6 @@
 package me.allen.imeji.constant;
 
-import com.google.gson.JsonObject;
-import me.allen.imeji.constant.error.WebError;
-import org.jglue.fluentjson.JsonBuilderFactory;
+import me.allen.imeji.response.WebError;
 
 public class WebResponseConstant {
 
