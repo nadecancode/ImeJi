@@ -21,12 +21,7 @@ public class ImeJiImageMapper implements IObjectMapper<ImeJiImage> {
                 .buildObject()
                 .add("id", imeJiImage.getId())
                 .add("encodedImages", jsonArrayBuilder)
-                .add("postName", imeJiImage.getPostName())
-                .add("postDescription", imeJiImage.getPostDescription())
                 .add("uploadTime", imeJiImage.getUploadedTime())
-                .add("expiry", imeJiImage.getExpiry())
-                .add("likes", imeJiImage.getLikes())
-                .add("views", imeJiImage.getViews())
                 .getJson();
     }
 
@@ -43,12 +38,8 @@ public class ImeJiImageMapper implements IObjectMapper<ImeJiImage> {
             encodedImages.add(encodedImage);
         });
 
-        ImeJiImage imeJiImage = new ImeJiImage(jsonObject.get("id").getAsString(), encodedImages, jsonObject.get("uploadTime").getAsLong());
-        imeJiImage.setExpiry(jsonObject.get("expiry").getAsLong());
-        imeJiImage.setPostName(jsonObject.get("postName").isJsonNull() ? null : jsonObject.get("postName").getAsString());
-        imeJiImage.setPostDescription(jsonObject.get("postDescription").isJsonNull() ? null : jsonObject.get("postDescription").getAsString());
-        imeJiImage.setLikes(jsonObject.get("likes").getAsInt());
-        imeJiImage.setViews(jsonObject.get("views").getAsInt());
+        ImeJiImage imeJiImage = new ImeJiImage(jsonObject.get("id").getAsString(), encodedImages);
+        imeJiImage.setUploadedTime(jsonObject.get("uploadTime").getAsLong());
 
         return imeJiImage;
     }

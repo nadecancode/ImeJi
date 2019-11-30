@@ -34,10 +34,9 @@ public class WebResponseConstant {
             "The specified image cannot be found on server, maybe it has expired or deleted?"
     );
 
-    public static final WebError IMAGE_UPLOAD_SUCCESS = new WebError(
-        200,
-        "Image Upload Success",
-            "The specified image has been successfully uploaded :)"
+    public static final WebError UNAUTHORIZED_REQUEST = new WebError(
+            403,
+            "Unauthorized Request",
+            "The request was not yet been authorized by the server."
     );
-
 }

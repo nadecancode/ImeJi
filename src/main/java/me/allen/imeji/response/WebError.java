@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class WebError implements WebResponse {
+public class WebError implements WebResponseEntity {
     private final int code;
     private final String message, description;
 }

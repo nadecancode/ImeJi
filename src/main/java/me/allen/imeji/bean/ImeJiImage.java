@@ -1,9 +1,14 @@
 package me.allen.imeji.bean;
 
-import lombok.*;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import me.allen.imeji.response.WebResponseEntity;
+import me.allen.imeji.util.id.IdentifierGenerator;
 import me.geso.tinyorm.Row;
-import me.geso.tinyorm.annotations.*;
+import me.geso.tinyorm.annotations.CreatedTimestampColumn;
+import me.geso.tinyorm.annotations.CsvColumn;
+import me.geso.tinyorm.annotations.PrimaryKey;
+import me.geso.tinyorm.annotations.Table;
 
 import java.util.List;
 
@@ -15,25 +20,20 @@ public class ImeJiImage extends Row<ImeJiImage> implements WebResponseEntity {
     @PrimaryKey
     private final String id;
 
-    @Column
-    private String postName;
-
-    @Column
-    private String postDescription;
-
     @CsvColumn
     private final List<String> encodedImages;
 
     @CreatedTimestampColumn
-    private final long uploadedTime;
+    private long uploadedTime;
 
-    @Column
-    private long expiry = -1L;
+    public static ImeJiImage create(List<String> encodedImages) {
+        ImeJiImage imeJiImage = new ImeJiImage(
+                IdentifierGenerator.getId(),
+                encodedImages
+        );
 
-    @Column
-    private int likes = 0;
+        imeJiImage.setUploadedTime(System.currentTimeMillis());
 
-    @Column
-    private int views = 0;
-
+        return imeJiImage;
+    }
 }

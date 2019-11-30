@@ -11,17 +11,11 @@ public class ImeJiInsertForm {
     public ImeJiInsertForm(ImeJiImage imeJiImage) {
         this.id = imeJiImage.getId();
         this.encodedImages = imeJiImage.getEncodedImages();
-        this.postName = imeJiImage.getPostName();
-        this.postDescription = imeJiImage.getPostDescription();
-        this.expiry = imeJiImage.getExpiry();
         this.uploadedTime = imeJiImage.getUploadedTime();
-        this.views = imeJiImage.getViews();
-        this.likes = imeJiImage.getLikes();
     }
 
     private String id;
     private List<String> encodedImages;
-    private String postName, postDescription;
-    private long expiry, uploadedTime;
+    private long uploadedTime;
     private int views, likes;
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <file url="file://$PROJECT_DIR$" libraries="{bootstrap, filepond, filepond-plugin-file-encode, filepond-plugin-file-validate-type, filepond-plugin-image-edit, filepond-plugin-image-exif-orientation, filepond-plugin-image-preview, filerobot-image-editor, jquery-3.4.1}" />
+  </component>
+</project>

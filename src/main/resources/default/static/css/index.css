@@ -1,0 +1,28 @@
+body {
+    background: rgba(0, 0, 0, 0.9);
+    overflow-x: hidden;
+}
+
+.index-button {
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    border: none;
+    border-radius: 5px;
+    width: 215px;
+    height: 60px;
+    background-color: white;
+    font-size: large;
+    text-align: center;
+    color: gray;
+    margin-top: 20px;
+    margin-right: 5px;
+    padding: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.index-button button:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}

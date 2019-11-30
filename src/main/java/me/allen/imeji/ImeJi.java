@@ -7,7 +7,6 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import me.allen.imeji.bean.ImeJiImage;
 import me.allen.imeji.cache.ICacheController;
 import me.allen.imeji.cache.impl.BuiltInCacheController;
 import me.allen.imeji.cache.impl.RedisCacheController;
@@ -19,9 +18,7 @@ import me.allen.imeji.webapp.ImeJiWebApp;
 import me.geso.tinyorm.TinyORM;
 
 import java.sql.Connection;
-import java.util.Arrays;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 @Getter
 public class ImeJi {
@@ -35,6 +32,7 @@ public class ImeJi {
     private Properties configurationProperties = new Properties();
     private ImeJiPrimaryThread primaryThread = new ImeJiPrimaryThread();
     private TaskChainFactory taskFactory;
+    private ImeJiWebApp imeJiWebApp;
 
     @Getter
     private static ImeJi instance;
@@ -56,7 +54,8 @@ public class ImeJi {
 
     @SneakyThrows
     private void startWebApp() {
-        new ImeJiWebApp(this).start();
+        this.imeJiWebApp = new ImeJiWebApp(this);
+        this.imeJiWebApp.start();
     }
 
     @SneakyThrows

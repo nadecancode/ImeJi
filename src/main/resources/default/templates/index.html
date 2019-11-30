@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ImeJi</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="${url}/library/doka/doka.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+          rel="stylesheet">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link href="${url}/css/index.css" rel="stylesheet">
+</head>
+<script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/3/filerobot-image-editor.min.js"></script>
+<script src="${url}/js/id.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+{{#doka}}
+<script src="${url}/library/doka/doka.min.js"></script>
+{{/doka}}
+
+<script
+        crossorigin="anonymous"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+<body>
+
+<div class="col-md-12">
+    <div class="col-md-6">
+        <input accept="image/*" style="position: center" type="file"/>
+    </div>
+    <div class="btn btn-block col-md-12 text-center">
+        <button class="index-button" onclick="upload()" type="submit">
+            <a>Upload</a>
+        </button>
+    </div>
+</div>
+
+<script>
+    FilePond.registerPlugin(
+        FilePondPluginFileValidateType,
+        FilePondPluginImagePreview,
+        FilePondPluginImageExifOrientation,
+        FilePondPluginFileEncode,
+    );
+
+    {
+        {
+            #doka
+        }
+    }
+    FilePond.registerPlugin(FilePondPluginImageEdit);
+    {
+        {
+            /doka}};
+
+            const pond = FilePond.create(document.querySelector('input[type="file"]'), {
+                name: 'upload',
+                allowFileTypeValidation: true,
+                acceptedFileTypes: [
+                    'image/*'
+                ],
+                imageEditInstantEdit: false,
+                labelFileTypeNotAllowed: 'The upload must be image only',
+                allowBrowse: true,
+                allowMultiple: false,
+                allowFileEncode: true,
+                allowImageEdit: true
+            });
+
+            {
+                {
+                    #doka
+                }
+            }
+            pond.imageEditEditor = Doka.create();
+            {
+                {
+                    /doka}};
+
+                    pond.appendTo(document.body);
+</script>
+<script>
+    function upload() {
+        if (pond.getFile() != null) {
+            $.ajax("${url}/api/upload", {
+                method: 'POST',
+                data: JSON.stringify({
+                    encodedImages: [
+                        pond.getFile().getFileEncodeBase64String()
+                    ]
+                }),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'application/json; charset=utf-8',
+                error: function (request, status, error) {
+                    console.log(error)
+                }
+            })
+        }
+    }
+</script>
+</body>
+</html>

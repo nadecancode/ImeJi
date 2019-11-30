@@ -1,12 +1,12 @@
 # ImeJi (イメージ)
 
-Open-Source Image Server (Backend Side)
+Open-Source Image Server
 
 ###### Also AP Computer Science Principles Create Task Annual Project
 Under Development...
 
 ---
-## Credits 
+## Credits (Backend)
 [Rapidoid](https://github.com/rapidoid/rapidoid) Extremely fast web server implementation
 
 [Hikari](https://github.com/brettwooldridge/HikariCP/) - For fast MySQL Data Storage
@@ -23,14 +23,26 @@ Under Development...
 
 [fluent-json](https://github.com/BrynCooke/fluent-json) - Fluent Json Builder (I started to use this from 1 year ago <3)
 
-[Gson](https://github.com/google/gson) - Smart Json Tool
+[Gson](https://github.com/google/gson) - Smart Json Tool 
 
 [Task Chain](https://github.com/aikar/TaskChain) - My first time to try this but I like this style for tasks
 
 ---
+
+## Credits (Frontend)
+[FilePond](https://pqina.nl/filepond/) - Seems like the best file upload script for me
+
+[Doka.js](https://pqina.nl/doka/) - Image editor (Extension, not included in project)
+
+[jQuery](https://jquery.com/) - Nah
+
+[BootStrap](https://www.bootstrapcdn.com/) - lol
+
+---
+
 ## To-Do List
 - [ ] Finish the WebApp
-- [ ] Account Registrations
-- [ ] Finish the Web API
-- [ ] Prepare for the Front-End
+- [X] Finish the Web API
+- [X] Prepare for the Front-End
+- [X] Solve the authorization issue
 - [ ] Optimize the code
